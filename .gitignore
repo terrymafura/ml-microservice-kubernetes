@@ -8,6 +8,7 @@ __pycache__/
 
 # Other files
 .DS_Store
+.vscode/
 
 # Distribution / packaging
 .Python

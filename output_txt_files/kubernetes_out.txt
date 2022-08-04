@@ -1,1 +1,12 @@
-<paste log output from Kubernetes-mediated prediction, here>
+NAME       STATUS   ROLES           AGE   VERSION
+minikube   Ready    control-plane   42m   v1.24.3
+error: failed to create deployment: deployments.apps "ml-microservice" already exists
+NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+ml-microservice   1/1     1            1           3m43s
+NAME                               READY   STATUS    RESTARTS   AGE
+ml-microservice-7f75f4999b-glb7s   1/1     Running   0          3m43s
+Forwarding from 0.0.0.0:8000 -> 80
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000

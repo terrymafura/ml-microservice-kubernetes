@@ -1,25 +1,30 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/maffsojah/ml-microservice-kubernetes/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/maffsojah/ml-microservice-kubernetes/tree/main)
 
+## Operationalizing a Machine Learning Microservice API using Kubernetes
+
 ## Project Overview
 
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
+This project consists of a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project operationalizes a Python flask app—in a file, `app.py`—that serves out predictions (inference) about housing prices through API calls.
+The api is containerized, uploaded to DockerHub then deployed into a [kubernetes](https://kubernetes.io/) cluster. Requests against the API can be run using a provided shell script `make_predictions.sh`
 
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
 
-### Project Tasks
+### Project Files
 
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-* Complete a Dockerfile to containerize this application
-* Deploy your containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
+| File/ Folder | Description |
+| --- | ----------- |
+| `.circleci/config.yml` | CircleCI configuration file for running lint tests on the project code |
+| `model_data` | directory with datasets used to train the machine learning model |
+| `out_txt_files` | directory containing the sample application docker logs(docker_out.txt) & kubernetes pod logs(kubernetes_out.txt) |
+| `Dockerfile` | dthe application Dockerfile using a Python3 base image |
+| `Makefile` | consists of set tasks to be run on the project like testing, linting, installing dependencies |
+| `app.py` | Flask application that serves out predictions (inference) about housing prices through API calls |
+| `make_predictions.sh` | shell script that sends some input data to our running model to trigger the api |
+| `requirements.txt` | file used to install multiple python dependencies in the Python virtual environment |
+| `resize.sh` | When testing the application using AWS Cloud9, the default EBS storage is 10GB which is smaller for running minikube + the application docker containers. `resize.sh` increases the Cloud9 instance storage to 20GB  |
+| `run_docker.sh` | shell script to tag, build and run the Flask application in a Docker container |
+| `run_kubernetes.sh` | shell script that creates a Kubernetes deployment using the application image from DockerHub  |
+| `upload_docker.sh` | shell script that tags and uploads the application Docker image to DockerHub |
 
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
-
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
 
 ---
 
@@ -36,11 +41,15 @@ source .devops/bin/activate
 ```
 * Run `make install` to install the necessary dependencies
 
+* Make sure you have Docker, Hadolint and Kubernetes (Minikube) installed
+
 ### Running `app.py`
 
 1. Standalone:  `python app.py`
 2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+3. Upload Docker image to DockerHub: `./upload_docker.sh`
+4. Run in Kubernetes:  `./run_kubernetes.sh`
+5. Send input data to API and get prediction: `./make_prediction.sh`
 
 ### Kubernetes Steps
 
